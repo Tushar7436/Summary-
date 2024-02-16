@@ -12,8 +12,7 @@ nltk.download('stopwords')
 
 # Function to extract important sentences from a PDF based on keywords
 def extract_important_sentences_from_pdf(uploaded_file, keywords):
-    pdf_content = io.BytesIO(uploaded_file.read())
-    pdf_reader = PyPDF2.PdfReader(pdf_content)
+    pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
 
     important_sentences = []
 
@@ -58,4 +57,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+       
 
