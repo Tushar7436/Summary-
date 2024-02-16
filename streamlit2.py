@@ -52,10 +52,6 @@ def main():
         st.subheader("Summarization of Document:")
         st.text(important_sentences)
 
-        # Display the first 500 characters of important sentences
-        st.subheader("Important Sentences:")
-        st.text(important_sentences[:500])
+        # Display the first 500 characte
 
-if __name__ == "__main__":
-    main()
 
