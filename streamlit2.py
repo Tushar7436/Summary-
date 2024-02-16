@@ -12,28 +12,26 @@ nltk.download('stopwords')
 
 # Function to extract important sentences from a PDF based on keywords
 def extract_important_sentences_from_pdf(uploaded_file, keywords):
-    # Use BytesIO to handle file content
     pdf_content = io.BytesIO(uploaded_file.read())
+    pdf_reader = PyPDF2.PdfReader(pdf_content)
 
-    with pdf_content as file:
-        pdf_reader = PyPDF2.PdfReader(file)
-        important_sentences = []
+    important_sentences = []
 
-        for page in pdf_reader.pages:
-            page_text = page.extract_text()
-            sentences = sent_tokenize(page_text)
-            words = word_tokenize(page_text)
-            stop_words = set(stopwords.words('english'))
-            words = [word for word in words if word.lower() not in stop_words]
+    for page in pdf_reader.pages:
+        page_text = page.extract_text()
+        sentences = sent_tokenize(page_text)
+        words = word_tokenize(page_text)
+        stop_words = set(stopwords.words('english'))
+        words = [word for word in words if word.lower() not in stop_words]
 
-            fdist = FreqDist(words)
+        fdist = FreqDist(words)
 
-            for sentence in sentences:
-                if any(keyword.lower() in sentence.lower() for keyword in keywords):
-                    important_sentences.append(sentence)
+        for sentence in sentences:
+            if any(keyword.lower() in sentence.lower() for keyword in keywords):
+                important_sentences.append(sentence)
 
-        important_sentences_text = '\n'.join(important_sentences)
-        return important_sentences_text
+    important_sentences_text = '\n'.join(important_sentences)
+    return important_sentences_text
 
 # Streamlit app
 def main():
